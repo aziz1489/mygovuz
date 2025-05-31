@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Договор займа</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    p {
+      text-align: justify;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-width: 150px;
+      margin: 0 10px;
+    }
+    .signature {
+      margin-top: 30px;
+    }
+    .signature input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    .signature-draw {
+      border: 2px dashed #ccc;
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      cursor: crosshair;
+    }
+    .aziz-signature {
+      margin-top: 10px;
+      max-width: 300px;
+      display: block;
+    }
+    .submit-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <!-- Первый логотип -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Emblem_of_Uzbekistan.svg/640px-Emblem_of_Uzbekistan.svg.png" alt="Герб Узбекистана">
+      <!-- Место для второго логотипа -->
+      <img src="https://marketing.uz/brend-goda-2022/uploads/works/covers/ba7d81c771f0bd1eae92be86c665f74f.jpg" alt="Второй логотип">
+    </div>
+
+    <h1>ДОГОВОР № 2045/МФ-25</h1>
+    <h2>на предоставление краткосрочного займа</h2>
+    <p>
+      Настоящий договор заключён между Азизом (далее именуемым «Кредитор») и Сардором (далее именуемым «Заемщик»), о нижеследующем: Кредитор предоставляет Заемщику сумму займа в размере 100,000 (сто тысяч) сум, с начислением сложных процентов в размере 50% в неделю на всю сумму долга, включая уже начисленные проценты.
+    </p>
+    <p>
+      Начисление процентов осуществляется еженедельно, в течение всего срока действия договора, на общую сумму задолженности, включая основной долг и ранее начисленные проценты. Сумма начисленных процентов добавляется к основному долгу в конце каждой недели. Срок займа устанавливается в 4 недели (1 месяц).
+    </p>
+    <p>
+      По окончании срока займа Заемщик обязуется выплатить всю сумму основного долга с начисленными процентами, рассчитанную по формуле: Сумма возврата = 100,000 × (1 + 0.5)^4. Ориентировочно сумма возврата составит в районе 150 миллионов сум. Условия могут быть изменены Кредитором в одностороннем порядке без согласия Заемщика. Заемщик подтверждает полное понимание и согласие с условиями начисления процентов.
+    </p>
+    <p>
+      В случае несвоевременного возврата долга Кредитор имеет право потребовать немедленного погашения всей суммы долга, включая начисленные проценты и возможные штрафные санкции. Все споры разрешаются в порядке, установленном действующим законодательством.
+    </p>
+    <p>
+      Данный договор составлен в двух экземплярах, имеющих равную юридическую силу, и вступает в силу с момента подписания обеими сторонами. Стороны подтверждают полное согласие с условиями настоящего договора.
+    </p>
+    <p>
+      Кредитор оставляет за собой право передачи прав по данному договору третьим лицам без предварительного согласия Заемщика.
+    </p>
+
+    <div class="signature">
+      <h3>Подписи сторон:</h3>
+      <p>Заемщик (Сардор):</p>
+      <input type="text" placeholder="Введите имя или нарисуйте подпись ниже">
+      <canvas class="signature-draw"></canvas>
+      <p>Кредитор (Азиз):</p>
+      <img class="aziz-signature" src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Signature_of_Abdul_Aziz_Abu_Bakar.jpg" alt="Подпись Азиза">
+    </div>
+
+    <button class="submit-button" onclick="send()">Отправить</button>
+  </div>
+
+  <script>
+    // Простое рисование на canvas для подписи
+    document.querySelectorAll('.signature-draw').forEach(canvas => {
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+
+      canvas.addEventListener('mousedown', () => { drawing = true; });
+      canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
+      canvas.addEventListener('mousemove', e => {
+        if (!drawing) return;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      });
+    });
+
+    // Функция отправки
+    function send() {
+      alert("Отправлено в Кредитное агентство Республики Узбекистан");
+    }
+  </script>
+</body>
+</html>
